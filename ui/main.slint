@@ -1,0 +1,162 @@
+import { FilledButton, ElevatedCard } from "../material-1.0/material.slint";
+import { Theme } from "theme/index.slint";
+import { TextButton } from "../material-1.0/ui/components/text_button.slint";
+export { MaterialWindowAdapter } from "../material-1.0/material.slint";
+
+export component ToggleThemeButton {
+    TextButton {
+        text: "Toggle Theme";
+        clicked => {
+            Theme.toggleTheme()
+        }
+    }
+}
+
+export {Theme}
+
+export component MainWindow inherits Window {
+    preferred-width: 1280px;
+    preferred-height: 720px;
+    background: Theme.currentThemeColors.background;
+    in-out property <bool> drawerOpen: true;
+    function toggleDrawer() {
+        drawerOpen = !drawerOpen;
+    }
+
+    out property <bool> isMobile: root.width < 720px;
+    VerticalLayout {
+        Rectangle {
+            vertical-stretch: 0;
+            padding: 12px;
+            background: Theme.currentThemeColors.primary;
+            drop-shadow-color: rgba(0, 0, 0, 0.3);
+            drop-shadow-offset-x: 0px;
+            drop-shadow-offset-y: 6px;
+            drop-shadow-blur: 12px;
+            min-height: 60px;
+            z: 1;
+            HorizontalLayout {
+                padding-right: 24px;
+                padding-left: 24px;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                TextButton {
+                    horizontal-stretch: 0;
+                    text: "Toggle Drawer";
+                    clicked => {
+                        toggleDrawer();
+                    };
+                }
+
+                Rectangle {
+                    horizontal-stretch: 1;
+                }
+            }
+        }
+
+        Rectangle {
+            z: 0;
+            vertical-stretch: 1;
+            background: Theme.currentThemeColors.disabled;
+            HorizontalLayout {
+                if !isMobile:Rectangle {
+                    drop-shadow-color: rgba(0, 0, 0, 0.3);
+                    drop-shadow-offset-x: 0px;
+                    drop-shadow-offset-y: 6px;
+                    drop-shadow-blur: 12px;
+                    vertical-stretch: 1;
+                    horizontal-stretch: 0;
+                    background: Theme.currentThemeColors.primary;
+                    width: drawerOpen ? 250px : 0px;
+                    // z: drawerOpen ? 1 : -100;
+                    opacity: drawerOpen ? 1 : 0;
+                    animate width, opacity { duration: 250ms; }
+                    VerticalLayout {
+                        spacing: 12px;
+                        padding: 12px;
+
+                        TextButton {
+                            vertical-stretch: 0;
+                            text: "Home";
+                            clicked => {
+                                toggleDrawer()
+                            }
+                        }
+
+                        TextButton {
+                            vertical-stretch: 0;
+                            text: "Clients";
+                        }
+
+                        Rectangle {
+                            vertical-stretch: 1;
+                        }
+                    }
+                }
+
+                Rectangle {
+                    vertical-stretch: 1;
+                    horizontal-stretch: 1;
+                }
+            }
+
+            if isMobile: Rectangle {
+                vertical-stretch: 1;
+                horizontal-stretch: 1;
+                width: root.width;
+                HorizontalLayout {
+                    vertical-stretch: 1;
+
+                    Rectangle {
+                        drop-shadow-color: rgba(0, 0, 0, 0.3);
+                        drop-shadow-offset-x: 0px;
+                        drop-shadow-offset-y: 6px;
+                        drop-shadow-blur: 12px;
+                        vertical-stretch: 1;
+                        background: Theme.currentThemeColors.primary;
+                        horizontal-stretch: 0;
+                        width: drawerOpen ? 250px : 0px;
+                        opacity: drawerOpen ? 1 : 0;
+                        animate width, opacity { duration: 250ms; }
+                        VerticalLayout {
+                            spacing: 12px;
+                            padding: 12px;
+
+                            TextButton {
+                                vertical-stretch: 0;
+                                text: "Home";
+                                clicked => {
+                                    toggleDrawer()
+                                }
+                            }
+
+                            TextButton {
+                                vertical-stretch: 0;
+                                text: "Clients";
+                            }
+
+                            Rectangle {
+                                vertical-stretch: 1;
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        width: drawerOpen ? 100% : 0%;
+                        opacity: drawerOpen ? 1 : 0;
+                        animate width, opacity { duration: 250ms; }
+                        vertical-stretch: 1;
+                        horizontal-stretch: 1;
+                        background: Theme.currentThemeColors.disabled.darker(1).transparentize(0.9);
+
+                        TouchArea {
+                            clicked => {
+                                toggleDrawer()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1 @@
+slint-viewer -Lmaterial="/home/salem/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/i-slint-compiler-1.15.1/widgets/material"   ui/main.slint 

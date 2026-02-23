@@ -1,0 +1,46 @@
+struct ThemeColors {
+    primary: color, 
+    background: color, 
+    onBackground: color, 
+    onPrimary: color, 
+    disabled: color, 
+    onDisabled: color, 
+    secondary: color, 
+    onSecondary: color,
+}
+export enum ThemeMode {
+    Light,
+    Dark
+}
+
+export global Theme {
+    public pure function themeNameToString(name: ThemeMode) -> string {
+        name == ThemeMode.Dark ? "Dark" : "Light"
+    }
+    public function toggleTheme() {
+        themeName = themeName == ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark;
+    }
+
+    in-out property <ThemeMode> themeName: ThemeMode.Light;
+    out property <ThemeColors> lightColors:  {
+        primary: #4F46E5,
+        background: #F9FAFB,
+        onBackground: #111827,
+        onPrimary: #FFFFFF,
+        disabled: #D1D5DB,
+        onDisabled: #9CA3AF,
+        secondary: #10B981,
+        onSecondary: #FFFFFF,
+    };
+    out property <ThemeColors> darkColors: {
+        primary: #8B5CF6,
+        background: #1F2937,
+        onBackground: #F9FAFB,
+        onPrimary: #F3F4F6,
+        disabled: #374151,
+        onDisabled: #9CA3AF,
+        secondary: #22C55E,
+        onSecondary: #111827,
+    };
+    in-out property <ThemeColors> currentThemeColors: themeName == ThemeMode.Light ? lightColors : darkColors;
+}
