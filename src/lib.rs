@@ -148,7 +148,7 @@ fn load_theme(kvs: Rc<KeyValueStore>, ui: Rc<MainWindow>) {
                 theme_name_string = "light";
             }
         };
-        kvs_clone.set("theme-name", &theme_name_string);
+        let _ = kvs_clone.set("theme-name", &theme_name_string);
     });
 
     match theme_name {
