@@ -40,12 +40,21 @@ export component MainWindow inherits Window {
                 padding-left: 24px;
                 padding-top: 12px;
                 padding-bottom: 12px;
+                spacing: 12px;
                 TextButton {
                     horizontal-stretch: 0;
                     text: "Toggle Drawer";
                     clicked => {
                         toggleDrawer();
                     };
+                }
+
+                TextButton {
+                    text: "Toggle Theme";
+                    horizontal-stretch: 0;
+                    clicked => {
+                        Theme.toggleTheme()
+                    }
                 }
 
                 Rectangle {

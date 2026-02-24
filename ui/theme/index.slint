@@ -18,7 +18,8 @@ export global Theme {
         name == ThemeMode.Dark ? "Dark" : "Light"
     }
     public function toggleTheme() {
-        themeName = themeName == ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark;
+        let newTheme = themeName == ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark;
+        setTheme(newTheme)
     }
 
     callback setTheme(name: ThemeMode);
