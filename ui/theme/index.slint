@@ -21,6 +21,8 @@ export global Theme {
         themeName = themeName == ThemeMode.Dark ? ThemeMode.Light : ThemeMode.Dark;
     }
 
+    callback setTheme(name: ThemeMode);
+
     in-out property <ThemeMode> themeName: ThemeMode.Light;
     out property <ThemeColors> lightColors:  {
         primary: #4F46E5,
