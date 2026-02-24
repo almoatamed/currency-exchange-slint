@@ -5,9 +5,6 @@ use std::collections::HashMap;
 use serde_json::Value;
 
 #[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::*;
-
-#[cfg(target_arch = "wasm32")]
 use web_sys;
 
 #[cfg(not(target_arch = "wasm32"))]
