@@ -80,7 +80,7 @@ impl KeyValueStore {
 
         home.push("kvs.json");
 
-        if !fs::exists(&home).unwrap() {
+        if !home.exists() {
             fs::write(&home, "{}").unwrap();
         }
 
