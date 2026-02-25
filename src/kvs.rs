@@ -1,21 +1,22 @@
-
 use core::error::Error;
 use serde::Serialize;
-use std::collections::HashMap;
 use serde_json::Value;
+use std::collections::HashMap;
+use std::path::PathBuf;
 
 #[cfg(target_arch = "wasm32")]
 use web_sys;
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(all(
+    not(target_arch = "wasm32"),
+    not(any(target_os = "android", target_os = "ios"))
+))]
 use std::env::home_dir;
+
 #[cfg(not(target_arch = "wasm32"))]
 use std::fs::create_dir_all;
 #[cfg(not(target_arch = "wasm32"))]
 use std::fs::{self, read_to_string};
-#[cfg(not(target_arch = "wasm32"))]
-use std::path::PathBuf;
-
 
 #[cfg(not(target_arch = "wasm32"))]
 pub struct KeyValueStore {

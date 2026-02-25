@@ -1,10 +1,15 @@
 mod kvs;
+use kvs::KeyValueStore;
+use std::path::PathBuf;
 use std::rc::Rc;
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(all(
+    not(target_arch = "wasm32"),
+    not(any(target_os = "android", target_os = "ios"))
+))]
 use std::env::home_dir;
 
 slint::include_modules!();
@@ -68,7 +73,7 @@ fn ui() -> MainWindow {
     not(target_arch = "wasm32"),
     any(target_os = "android", target_os = "ios")
 ))]
-fn ui(base_dir: PathBuf) -> MainWindow {
+fn ui(base_dir: PathBuf) -> Rc<MainWindow> {
     use std::rc::Rc;
     let ui = Rc::new(MainWindow::new().unwrap());
     let kvs = Rc::new(KeyValueStore::new(base_dir));
@@ -85,9 +90,9 @@ pub fn main() {
 
 #[cfg(target_os = "android")]
 #[unsafe(no_mangle)]
-fn android_main(android_app: slint::android::AndroidApp) {
-    slint::android::init(android_app).unwrap();
-    let base_dir = android_app.context().base_dir();
+pub fn android_main(android_app: slint::android::AndroidApp) {
+    slint::android::init(android_app.clone()).unwrap();
+    let base_dir = android_app.obb_path().unwrap();
     let ui = ui(base_dir);
     MaterialWindowAdapter::get(&ui).set_disable_hover(true);
     ui.run().unwrap();

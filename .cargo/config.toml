@@ -11,6 +11,11 @@ rustflags = [
     "-C", "link-arg=/STACK:8000000"
 ]
 
-[build]
+# [build]
 # target="wasm32-unknown-unknown"
 # target="aarch64-linux-android"
+
+
+[target.x86_64-linux-android]
+linker = "/home/salem/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/x86_64-linux-android33-clang"
+ar = "/home/salem/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar"
